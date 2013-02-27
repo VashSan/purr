@@ -1,4 +1,17 @@
-== Purr Music Player
+Purr Music Player
+================
+:Author:    Alexander Schwoch
+:Email:     vashsan@gmail.com
+:Date:      2013-02-17
+:Revision:  0
+:toc:
 
-Stay tuned :)
+== Purpose
 
+I am dissatisfied with a lot of music players. Those that exist
+run either on Linux or Windows. Those that run on both are unstable
+or do not comfort my requirements for a small, fast, decent player.
+
+I do not need visualizations nor skins nor a lot of the other fancy
+stuff out there. It shall play MP3 and maybe OGG thats it, and
+that is what you shall find here.
