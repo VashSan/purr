@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,11 +13,14 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        purrwindow.cpp
+        purrwindow.cpp \
+    filedialog.cpp
 
-HEADERS  += purrwindow.hpp
+HEADERS  += purrwindow.hpp \
+    filedialog.hpp
 
-FORMS    += purrwindow.ui
+FORMS    += purrwindow.ui \
+    filedialog.ui
 
 OTHER_FILES += \
     README.asciidoc
