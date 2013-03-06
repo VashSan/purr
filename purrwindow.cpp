@@ -1,15 +1,14 @@
 #include "purrwindow.hpp"
 #include "ui_purrwindow.h"
+#include <QFileDialog>
 
 
 PurrWindow::PurrWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::PurrWindow),
-    fileDialog(this)
+    ui(new Ui::PurrWindow)
 {
     ui->setupUi(this);
 
-    connect(&fileDialog, SIGNAL(accepted()), this, SLOT(on_fileDialog_accepted()));
     connect(&player, SIGNAL(positionChanged(qint64)), this, SLOT(on_position_changed(qint64)));
     connect(&player, SIGNAL(durationChanged(qint64)), this, SLOT(on_duration_changed(qint64)));
     connect(ui->trackProgressSlider, SIGNAL(sliderReleased()), this, SLOT(on_slider_released()));
@@ -21,19 +20,24 @@ PurrWindow::~PurrWindow()
     delete ui;
 }
 
-void PurrWindow::on_fileDialog_accepted()
-{
-    // TODO validate file
-    selectedFile = fileDialog.getSelectedPath();
-    if (player.state() == QMediaPlayer::StoppedState)
-    {
-        playMedia();
-    }
-}
-
 void PurrWindow::on_openButton_clicked()
 {
-    fileDialog.show();
+    QFileDialog dialog;
+    dialog.setNameFilter("*.mp3");
+    if (dialog.exec())
+    {
+        for(QString file : dialog.selectedFiles())
+        {
+            // TODO validate files
+            // TODO append files from dir
+            selectedFiles.append(file);
+        }
+
+        if (player.state() == QMediaPlayer::StoppedState)
+        {
+            playMedia();
+        }
+    }
 }
 
 void PurrWindow::on_playButton_clicked()
@@ -49,9 +53,13 @@ void PurrWindow::playMedia()
         player.stop();
     }
 
-    QUrl media = QUrl::fromLocalFile(selectedFile);
-    player.setMedia(media);
-    player.play();
+    if (!selectedFiles.isEmpty())
+    {
+        QString selectedFile = selectedFiles.takeFirst();
+        QUrl media = QUrl::fromLocalFile(selectedFile);
+        player.setMedia(media);
+        player.play();
+    }
 }
 
 void PurrWindow::on_pauseButton_clicked()

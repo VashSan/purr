@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include <QtMultimedia/qmediaplayer.h>
-#include "filedialog.hpp"
 
 namespace Ui {
 class PurrWindow;
@@ -28,8 +27,6 @@ private slots:
 
     void on_stopButton_clicked();
 
-    void on_fileDialog_accepted();
-
     void on_position_changed(qint64 position);
 
     void on_duration_changed(qint64 duration);
@@ -40,9 +37,8 @@ private slots:
 
 private:
     Ui::PurrWindow *ui;
-    QString selectedFile;
+    QStringList selectedFiles;
     QMediaPlayer player;
-    FileDialog fileDialog;
     qint64 currentDuration;
 };
 

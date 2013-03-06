@@ -14,12 +14,10 @@ TARGET = purr
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        purrwindow.cpp \
-    filedialog.cpp
+SOURCES += main.cpp \
+    purrwindow.cpp
 
-HEADERS  += purrwindow.hpp \
-    filedialog.hpp
+HEADERS  += purrwindow.hpp
 
 FORMS    += purrwindow.ui \
     filedialog.ui
