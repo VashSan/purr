@@ -19,8 +19,7 @@ SOURCES += main.cpp \
 
 HEADERS  += purrwindow.hpp
 
-FORMS    += purrwindow.ui \
-    filedialog.ui
+FORMS    += purrwindow.ui
 
 OTHER_FILES += \
     README.asciidoc

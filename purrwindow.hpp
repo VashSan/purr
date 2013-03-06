@@ -40,6 +40,8 @@ private:
     QStringList selectedFiles;
     QMediaPlayer player;
     qint64 currentDuration;
+
+    void updatePlaylist();
 };
 
 #endif // PURRWINDOW_HPP

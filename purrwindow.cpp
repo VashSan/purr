@@ -24,6 +24,8 @@ void PurrWindow::on_openButton_clicked()
 {
     QFileDialog dialog;
     dialog.setNameFilter("*.mp3");
+    dialog.setModal(true);
+    dialog.setFileMode(QFileDialog::ExistingFiles);
     if (dialog.exec())
     {
         for(QString file : dialog.selectedFiles())
@@ -31,6 +33,7 @@ void PurrWindow::on_openButton_clicked()
             // TODO validate files
             // TODO append files from dir
             selectedFiles.append(file);
+            updatePlaylist();
         }
 
         if (player.state() == QMediaPlayer::StoppedState)
@@ -56,6 +59,8 @@ void PurrWindow::playMedia()
     if (!selectedFiles.isEmpty())
     {
         QString selectedFile = selectedFiles.takeFirst();
+        updatePlaylist();
+
         QUrl media = QUrl::fromLocalFile(selectedFile);
         player.setMedia(media);
         player.play();
@@ -122,4 +127,10 @@ void PurrWindow::updatePosition()
     int value = ui->trackProgressSlider->sliderPosition();
     qint64 newPosition = (double) currentDuration * ((double)value / 100.0L);
     player.setPosition(newPosition);
+}
+
+void PurrWindow::updatePlaylist()
+{
+    ui->playlist->clear();
+    ui->playlist->addItems(selectedFiles);
 }
