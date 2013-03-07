@@ -8,6 +8,8 @@ namespace Ui {
 class PurrWindow;
 }
 
+class QListWidgetItem;
+
 class PurrWindow : public QMainWindow
 {
     Q_OBJECT
@@ -38,6 +40,8 @@ private slots:
     void on_listitem_changed(int row);
 
     void on_playingState_changed(QMediaPlayer::State state);
+
+    void on_listitem_doubleClicked(QListWidgetItem* item);
 
 private:
     Ui::PurrWindow *ui;

@@ -30,6 +30,8 @@ PurrWindow::PurrWindow(QWidget *parent) :
     // list widget signals
     connect(ui->playlist, &QListWidget::currentRowChanged,
             this, &PurrWindow::on_listitem_changed);
+    connect(ui->playlist, &QListWidget::itemDoubleClicked,
+            this, &PurrWindow::on_listitem_doubleClicked);
 }
 
 PurrWindow::~PurrWindow()
@@ -58,17 +60,17 @@ void PurrWindow::on_openButton_clicked()
 
 void PurrWindow::on_playButton_clicked()
 {
-    fullStop = true;
     currentTrack = nextTrack < 0 ? 0 : nextTrack;
     playMedia();
-    fullStop = false;
 }
 
 void PurrWindow::playMedia()
 {
     if (player.state() == QMediaPlayer::PlayingState)
     {
+        fullStop = true;
         player.stop();
+        fullStop = false;
     }
 
     if (!selectedFiles.isEmpty())
@@ -177,3 +179,8 @@ void PurrWindow::on_playingState_changed(QMediaPlayer::State state)
     }
 }
 
+void PurrWindow::on_listitem_doubleClicked(QListWidgetItem * item)
+{
+    currentTrack = ui->playlist->row(item);
+    playMedia();
+}
