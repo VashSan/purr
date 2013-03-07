@@ -9,10 +9,14 @@ PurrWindow::PurrWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(&player, SIGNAL(positionChanged(qint64)), this, SLOT(on_position_changed(qint64)));
-    connect(&player, SIGNAL(durationChanged(qint64)), this, SLOT(on_duration_changed(qint64)));
-    connect(ui->trackProgressSlider, SIGNAL(sliderReleased()), this, SLOT(on_slider_released()));
-    connect(ui->trackProgressSlider, SIGNAL(actionTriggered(int)), this, SLOT(on_slider_triggered(int)));
+    connect(&player, &QMediaPlayer::positionChanged,
+            this, &PurrWindow::on_position_changed);
+    connect(&player, &QMediaPlayer::durationChanged,
+            this, &PurrWindow::on_duration_changed);
+    connect(ui->trackProgressSlider, &QSlider::sliderReleased,
+            this, &PurrWindow::on_slider_released);
+    connect(ui->trackProgressSlider, &QSlider::actionTriggered,
+            this, &PurrWindow::on_slider_triggered);
 }
 
 PurrWindow::~PurrWindow()
