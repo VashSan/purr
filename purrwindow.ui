@@ -49,7 +49,7 @@
         <item>
          <widget class="QPushButton" name="pauseButton">
           <property name="text">
-           <string>Pause</string>
+           <string>Un/Pause</string>
           </property>
          </widget>
         </item>

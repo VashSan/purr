@@ -2,7 +2,7 @@
 #define PURRWINDOW_HPP
 
 #include <QMainWindow>
-#include <QtMultimedia/qmediaplayer.h>
+#include <QMediaPlayer>
 
 namespace Ui {
 class PurrWindow;
@@ -35,11 +35,18 @@ private slots:
 
     void on_slider_triggered(int value);
 
+    void on_listitem_changed(int row);
+
+    void on_playingState_changed(QMediaPlayer::State state);
+
 private:
     Ui::PurrWindow *ui;
     QStringList selectedFiles;
     QMediaPlayer player;
     qint64 currentDuration;
+    qint32 nextTrack;
+    qint32 currentTrack;
+    bool fullStop;
 
     void updatePlaylist();
 };
