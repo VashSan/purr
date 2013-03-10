@@ -184,3 +184,8 @@ void PurrWindow::on_listitem_doubleClicked(QListWidgetItem * item)
     currentTrack = ui->playlist->row(item);
     playMedia();
 }
+
+void PurrWindow::on_dial_valueChanged(int value)
+{
+    player.setVolume(value);
+}

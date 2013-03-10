@@ -43,6 +43,8 @@ private slots:
 
     void on_listitem_doubleClicked(QListWidgetItem* item);
 
+    void on_dial_valueChanged(int value);
+
 private:
     Ui::PurrWindow *ui;
     QStringList selectedFiles;
