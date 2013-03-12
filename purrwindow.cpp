@@ -66,6 +66,8 @@ PurrWindow::~PurrWindow()
 
 void PurrWindow::on_openButton_clicked()
 {
+    // TODO remove hardcoded mp3 stuff
+
     QFileDialog dialog;
     dialog.setNameFilter("*.mp3");
     dialog.setModal(true);
@@ -73,12 +75,25 @@ void PurrWindow::on_openButton_clicked()
 
     if (dialog.exec())
     {
-        for(QString file : dialog.selectedFiles())
+        for(QString filePath : dialog.selectedFiles())
         {
-            // TODO validate files
-            // TODO append files from dir
-            selectedFiles.append(file);
-            updatePlaylist();
+            // I assume the file exists since it comes
+            // from the file selection dialog. I will check
+            // before playing it though.
+
+            if (filePath.endsWith("mp3", Qt::CaseInsensitive))
+            {
+                // TODO append files from dir
+                selectedFiles.append(filePath);
+                updatePlaylist();
+            }
+            else
+            {
+                QString message("skipped adding non mp3 file: ");
+                message.append(filePath);
+                ui->statusBar->showMessage(message, 2000);
+                qDebug() << message;
+            }
         }
     }
 }
@@ -103,9 +118,19 @@ void PurrWindow::playMedia()
         QString selectedFile = selectedFiles.at(currentTrack);
         updatePlaylist();
 
-        QUrl media = QUrl::fromLocalFile(selectedFile);
-        player.setMedia(media);
-        player.play();
+        QFile file(selectedFile);
+        if (file.exists())
+        {
+            QUrl media = QUrl::fromLocalFile(selectedFile);
+            player.setMedia(media);
+            player.play();
+        }
+        else
+        {
+            qDebug() << "Invalid file detected: " << selectedFile;
+            ui->statusBar->showMessage("The current file does not exist. Stopped Playback.");
+            // TODO proceed to next file?
+        }
     }
 }
 
