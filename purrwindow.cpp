@@ -1,6 +1,29 @@
 #include "purrwindow.hpp"
 #include "ui_purrwindow.h"
+#include <QTime>
 #include <QFileDialog>
+
+/// formats an amount of milliseconds to be displayed on the ui
+static QString formatLabelTime(qint64 milliseconds)
+{
+    const qint64 one_hour = 1000 * 60 * 60;
+
+    QString format;
+    if (milliseconds >= one_hour)
+    {
+        format = "H:mm:ss";
+    }
+    else
+    {
+        format = "m:ss";
+    }
+
+    QTime timeValue(0, 0);
+    QTime resultTime = timeValue.addMSecs(milliseconds);
+    QString result = resultTime.toString(format);
+    return result;
+}
+
 
 
 PurrWindow::PurrWindow(QWidget *parent) :
@@ -12,6 +35,8 @@ PurrWindow::PurrWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->playlist->setSortingEnabled(false);
+    ui->durationLabel->setText("0:00");
+    ui->positionLabel->setText("0:00");
 
     // qmediaplayer signals
     connect(&player, &QMediaPlayer::positionChanged,
@@ -110,11 +135,17 @@ void PurrWindow::on_position_changed(qint64 position)
         result = floor(result * 100);
         ui->trackProgressSlider->setValue(result);
     }
+
+    QString labelText = formatLabelTime(position);
+    ui->positionLabel->setText(labelText);
 }
 
 void PurrWindow::on_duration_changed(qint64 duration)
 {
     currentDuration = duration;
+
+    QString labelText = formatLabelTime(duration);
+    ui->durationLabel->setText(labelText);
 }
 
 void PurrWindow::on_slider_released()
