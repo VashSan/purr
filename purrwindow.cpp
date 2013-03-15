@@ -2,6 +2,7 @@
 #include "ui_purrwindow.h"
 #include <QTime>
 #include <QFileDialog>
+#include "tagger.hpp"
 
 /// formats an amount of milliseconds to be displayed on the ui
 static QString formatLabelTime(qint64 milliseconds)
@@ -69,6 +70,7 @@ void PurrWindow::on_openButton_clicked()
     // TODO remove hardcoded mp3 stuff
 
     QFileDialog dialog;
+    dialog.setParent(this);
     dialog.setNameFilter("*.mp3");
     dialog.setModal(true);
     dialog.setFileMode(QFileDialog::ExistingFiles);
@@ -86,6 +88,14 @@ void PurrWindow::on_openButton_clicked()
                 // TODO append files from dir
                 selectedFiles.append(filePath);
                 updatePlaylist();
+
+                using namespace tagger;
+                CTagger tagger(filePath);
+                STagInfo info = tagger.parse();
+
+                selectedMedia.append(info);
+
+                qDebug() << "Recognized meta data: " << info.artist << " - " << info.title;
             }
             else
             {
@@ -115,19 +125,19 @@ void PurrWindow::playMedia()
 
     if (!selectedFiles.isEmpty())
     {
-        QString selectedFile = selectedFiles.at(currentTrack);
+        STagInfo info = selectedMedia.at(currentTrack);
         updatePlaylist();
 
-        QFile file(selectedFile);
+        QFile file(info.file);
         if (file.exists())
         {
-            QUrl media = QUrl::fromLocalFile(selectedFile);
+            QUrl media = QUrl::fromLocalFile(info.file);
             player.setMedia(media);
             player.play();
         }
         else
         {
-            qDebug() << "Invalid file detected: " << selectedFile;
+            qDebug() << "Invalid file detected: " << info.file;
             ui->statusBar->showMessage("The current file does not exist. Stopped Playback.");
             // TODO proceed to next file?
         }
@@ -212,8 +222,14 @@ void PurrWindow::updatePosition()
 
 void PurrWindow::updatePlaylist()
 {
+    QStringList listItems;
+    for(STagInfo info : selectedMedia)
+    {
+        listItems.append(info.toString());
+    }
+
     ui->playlist->clear();
-    ui->playlist->addItems(selectedFiles);
+    ui->playlist->addItems(listItems);
     ui->playlist->setCurrentRow(currentTrack);
 }
 
@@ -227,7 +243,7 @@ void PurrWindow::on_playingState_changed(QMediaPlayer::State state)
     if (state == QMediaPlayer::StoppedState && !fullStop)
     {
         currentTrack++;
-        if (currentTrack+1 > selectedFiles.count())
+        if (currentTrack+1 > selectedMedia.count())
         {
             currentTrack = 0;
         }
