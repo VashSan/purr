@@ -15,9 +15,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    purrwindow.cpp
+    purrwindow.cpp \
+    tagger.cpp
 
-HEADERS  += purrwindow.hpp
+HEADERS  += purrwindow.hpp \
+    tagger.hpp
 
 FORMS    += purrwindow.ui
 
