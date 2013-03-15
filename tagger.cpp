@@ -4,7 +4,6 @@
 namespace tagger
 {
 
-
 CTagger::CTagger(const QString& taggedFile)
     : filePath(taggedFile)
 {
