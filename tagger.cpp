@@ -46,11 +46,17 @@ bool CTagger::parse_id3v1(STagInfo &info)
     const short tagNameLength = 3;
 
     qint64 tagOffset = file.size() - (tagLength + tagNameLength);
-    file.seek(tagOffset);
+    if ( !file.seek(tagOffset) )
+    {
+        return false;
+    }
 
     char tagNameActual[tagNameLength+1];
     memset(tagNameActual, 0, tagNameLength+1);
-    file.read(tagNameActual, tagNameLength);
+    if ( tagNameLength != file.read(tagNameActual, tagNameLength) )
+    {
+        return false;
+    }
 
     const char tagNameExpected[tagNameLength+1] = "TAG";
     if ( strcmp(tagNameExpected, tagNameActual) != 0 )
@@ -59,7 +65,10 @@ bool CTagger::parse_id3v1(STagInfo &info)
     }
 
     char tagData[tagLength];
-    file.read(tagData, tagLength);
+    if ( tagLength != file.read(tagData, tagLength) )
+    {
+        return false;
+    }
 
     s_tag* pTag = reinterpret_cast<s_tag*>(&tagData);
 
