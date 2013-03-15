@@ -13,12 +13,13 @@ CTagger::CTagger(const QString& taggedFile)
 STagInfo CTagger::parse()
 {
     STagInfo tagInfo;
+    tagInfo.file = filePath;
+
     if ( parse_id3v1(tagInfo) )
     {
         return tagInfo;
     }
 
-    tagInfo.title = filePath;
     return tagInfo;
 }
 
