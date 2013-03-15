@@ -19,7 +19,8 @@ SOURCES += main.cpp \
     tagger.cpp
 
 HEADERS  += purrwindow.hpp \
-    tagger.hpp
+    tagger.hpp \
+    taginfo.hpp
 
 FORMS    += purrwindow.ui
 

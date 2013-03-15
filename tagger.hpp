@@ -1,16 +1,10 @@
 #ifndef TAGGER_HPP
 #define TAGGER_HPP
-
+#include "taginfo.hpp"
 #include <QString>
 
 namespace tagger
 {
-
-struct STagInfo
-{
-    QString artist;
-    QString title;
-};
 
 class CTagger
 {
