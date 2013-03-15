@@ -61,11 +61,17 @@ bool CTagger::parse_id3v1(STagInfo &info)
     char tagData[tagLength];
     file.read(tagData, tagLength);
 
-
     s_tag* pTag = reinterpret_cast<s_tag*>(&tagData);
 
-    info.artist.append(pTag->artist);
-    info.title.append(pTag->title);
+    // Unclear from documentation which encoding to use.
+    // Google believes its Latin1 but there may be other
+    // files out there.
+
+    // WARNING: restrict to sizeof(chars)
+    // ID3v1 does not terminate the strings!
+
+    info.artist = QString::fromLatin1(pTag->artist, sizeof(pTag->artist));
+    info.title = QString::fromLatin1(pTag->title, sizeof(pTag->title));
 
     return true;
 }
