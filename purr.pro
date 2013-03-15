@@ -25,4 +25,4 @@ HEADERS  += purrwindow.hpp \
 FORMS    += purrwindow.ui
 
 OTHER_FILES += \
-    README.asciidoc
+    README.md
