@@ -31,7 +31,7 @@ PurrWindow::PurrWindow(QWidget *parent) :
     ui(new Ui::PurrWindow),
     nextTrack(0),
     currentTrack(0),
-    fullStop(true)
+    fullStop(false)
 {
     ui->setupUi(this);
     ui->playlist->setSortingEnabled(false);
