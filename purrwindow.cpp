@@ -91,8 +91,6 @@ void PurrWindow::on_openButton_clicked()
                 STagInfo info = tagger.parse();
 
                 selectedMedia.append(info);
-
-                qDebug() << "Recognized meta data: " << info.artist << " - " << info.title;
             }
             else
             {
