@@ -46,9 +46,12 @@ private slots:
 
     void on_dial_valueChanged(int value);
 
+    void on_clearListButton_clicked();
+
+    void on_removeListButton_clicked();
+
 private:
     Ui::PurrWindow *ui;
-    QStringList selectedFiles;
     QVector<STagInfo> selectedMedia;
     QMediaPlayer player;
     qint64 currentDuration;

@@ -86,9 +86,6 @@ void PurrWindow::on_openButton_clicked()
             if (filePath.endsWith("mp3", Qt::CaseInsensitive))
             {
                 // TODO append files from dir
-                selectedFiles.append(filePath);
-                updatePlaylist();
-
                 using namespace tagger;
                 CTagger tagger(filePath);
                 STagInfo info = tagger.parse();
@@ -105,6 +102,8 @@ void PurrWindow::on_openButton_clicked()
                 qDebug() << message;
             }
         }
+
+        updatePlaylist();
     }
 }
 
@@ -123,8 +122,13 @@ void PurrWindow::playMedia()
         fullStop = false;
     }
 
-    if (!selectedFiles.isEmpty())
+    if (!selectedMedia.isEmpty())
     {
+        if (currentTrack+1 > selectedMedia.count())
+        {
+            currentTrack = 0;
+        }
+
         STagInfo info = selectedMedia.at(currentTrack);
         updatePlaylist();
 
@@ -243,10 +247,6 @@ void PurrWindow::on_playingState_changed(QMediaPlayer::State state)
     if (state == QMediaPlayer::StoppedState && !fullStop)
     {
         currentTrack++;
-        if (currentTrack+1 > selectedMedia.count())
-        {
-            currentTrack = 0;
-        }
         playMedia();
     }
 }
@@ -260,4 +260,21 @@ void PurrWindow::on_listitem_doubleClicked(QListWidgetItem * item)
 void PurrWindow::on_dial_valueChanged(int value)
 {
     player.setVolume(value);
+}
+
+void PurrWindow::on_clearListButton_clicked()
+{
+    selectedMedia.clear();
+    updatePlaylist();
+}
+
+void PurrWindow::on_removeListButton_clicked()
+{
+    qint64 track = ui->playlist->currentRow();
+    selectedMedia.remove(track);
+    updatePlaylist();
+    if (track == currentTrack)
+    {
+        playMedia();
+    }
 }
