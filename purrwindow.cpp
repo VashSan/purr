@@ -285,9 +285,6 @@ void PurrWindow::on_savePlaylistButton_clicked()
 
 void PurrWindow::saveSelectedMedia()
 {
-    QMessageBox::information(this, "Purr", "This is not implemented yet");
-    return;
-
     QFileDialog dialog;
     dialog.setParent(this);
     dialog.setNameFilter("*.xspf");
@@ -310,9 +307,6 @@ void PurrWindow::on_loadPlaylistButton_clicked()
 
 void PurrWindow::appendMediaFromFile()
 {
-    QMessageBox::information(this, "Purr", "This is not implemented yet");
-    return;
-
     QFileDialog dialog;
     dialog.setParent(this);
     dialog.setNameFilter("*.xspf");
@@ -322,7 +316,11 @@ void PurrWindow::appendMediaFromFile()
     if (dialog.exec())
     {
         QString file = dialog.selectedFiles().at(0);
-        selectedMedia.appendFromFile(file);
+        if (!file.isEmpty())
+        {
+            selectedMedia.appendFromFile(file);
+            updatePlaylist();
+        }
     }
 
 }
