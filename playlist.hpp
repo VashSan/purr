@@ -16,9 +16,9 @@ public:
     bool saveToFile(const QString& filePath) const;
     bool appendFromFile(const QString& filePath);
 
-
 private:
     PtrPlaylistProvider provider;
+
 };
 
 #endif // PLAYLIST_H
