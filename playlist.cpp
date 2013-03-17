@@ -1,5 +1,6 @@
 #include "playlist.hpp"
 #include <QFile>
+#include "tagger.hpp"
 
 /// simplest file provider for saving playlists
 class DefaultProvider : public IPlaylistFormatProvider
@@ -28,7 +29,7 @@ class DefaultProvider : public IPlaylistFormatProvider
     {
         QFile file;
         file.setFileName(filePath);
-        // TODO file exists and errors
+        // TODO handle errors
         file.open(QFile::ReadOnly);
         QByteArray data = file.readAll();
 
@@ -36,10 +37,16 @@ class DefaultProvider : public IPlaylistFormatProvider
 
         for (QByteArray file : fileList)
         {
-            // TODO read file tag
-            STagInfo info;
-            info.file = QString::fromUtf8(file);
-            playlist.append(info);
+            QString playlistFile = QString::fromUtf8(file);
+
+            QFile testFile;
+            testFile.setFileName(playlistFile);
+            if (testFile.exists())
+            {
+                tagger::CTagger tagit(playlistFile);
+                STagInfo info = tagit.parse();
+                playlist.append(info);
+            }
         }
     }
 };
