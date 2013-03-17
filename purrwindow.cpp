@@ -3,6 +3,7 @@
 #include <QTime>
 #include <QFileDialog>
 #include "tagger.hpp"
+#include <QMessageBox>
 
 /// formats an amount of milliseconds to be displayed on the ui
 static QString formatLabelTime(qint64 milliseconds)
@@ -275,4 +276,51 @@ void PurrWindow::on_removeListButton_clicked()
     {
         playMedia();
     }
+}
+
+void PurrWindow::on_savePlaylistButton_clicked()
+{
+    saveSelectedMedia();
+}
+
+void PurrWindow::saveSelectedMedia()
+{
+    QMessageBox::information(this, "Purr", "This is not implemented yet");
+    return;
+
+    QFileDialog dialog;
+    dialog.setParent(this);
+    dialog.setNameFilter("*.xspf");
+    dialog.setModal(true);
+
+    if (dialog.exec())
+    {
+        // TODO I want to do something like this:
+        // selectedMedia.save(filename);
+    }
+
+}
+
+
+void PurrWindow::on_loadPlaylistButton_clicked()
+{
+    appendMediaFromFile();
+}
+
+void PurrWindow::appendMediaFromFile()
+{
+    QMessageBox::information(this, "Purr", "This is not implemented yet");
+    return;
+
+    QFileDialog dialog;
+    dialog.setParent(this);
+    dialog.setNameFilter("*.xspf");
+    dialog.setModal(true);
+
+    if (dialog.exec())
+    {
+        // TODO I want to do something like this:
+        // selectedMedia.append(filename);
+    }
+
 }

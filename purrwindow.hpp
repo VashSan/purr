@@ -50,6 +50,10 @@ private slots:
 
     void on_removeListButton_clicked();
 
+    void on_savePlaylistButton_clicked();
+
+    void on_loadPlaylistButton_clicked();
+
 private:
     Ui::PurrWindow *ui;
     QVector<STagInfo> selectedMedia;
@@ -60,6 +64,8 @@ private:
     bool fullStop;
 
     void updatePlaylist();
+    void saveSelectedMedia();
+    void appendMediaFromFile();
 };
 
 #endif // PURRWINDOW_HPP
