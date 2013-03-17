@@ -121,7 +121,8 @@ Features
 *Purr* is very slender right now. However development just started
 so be excited for new features. It can
 
-* play MP3 files from a playlist you create
+* Play MP3 files from a playlist you create
+* Save or load a playlist to/from a textfile
 * The player displays
   * the current position and total time
   * the file currently playing

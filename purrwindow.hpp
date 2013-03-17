@@ -55,6 +55,8 @@ private slots:
 
     void on_loadPlaylistButton_clicked();
 
+    void on_about_triggered();
+
 private:
     Ui::PurrWindow *ui;
     CPlaylist selectedMedia;

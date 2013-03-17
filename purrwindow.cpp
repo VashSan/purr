@@ -59,6 +59,10 @@ PurrWindow::PurrWindow(QWidget *parent) :
             this, &PurrWindow::on_listitem_changed);
     connect(ui->playlist, &QListWidget::itemDoubleClicked,
             this, &PurrWindow::on_listitem_doubleClicked);
+
+    // actions
+    connect(ui->actionAbout, &QAction::triggered,
+            this, &PurrWindow::on_about_triggered);
 }
 
 PurrWindow::~PurrWindow()
@@ -303,6 +307,11 @@ void PurrWindow::saveSelectedMedia()
 void PurrWindow::on_loadPlaylistButton_clicked()
 {
     appendMediaFromFile();
+}
+
+void PurrWindow::on_about_triggered()
+{
+    QMessageBox::information(this, "Purr", "The Purr music player was brought to you by Vash.\n\nSee https://github.com/VashSan/purr for more information.");
 }
 
 void PurrWindow::appendMediaFromFile()
