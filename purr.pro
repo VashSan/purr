@@ -16,11 +16,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     purrwindow.cpp \
-    tagger.cpp
+    tagger.cpp \
+    playlist.cpp
 
 HEADERS  += purrwindow.hpp \
     tagger.hpp \
-    taginfo.hpp
+    taginfo.hpp \
+    playlist.hpp \
+    iplaylistformatprovider.hpp
 
 FORMS    += purrwindow.ui
 

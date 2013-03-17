@@ -292,11 +292,12 @@ void PurrWindow::saveSelectedMedia()
     dialog.setParent(this);
     dialog.setNameFilter("*.xspf");
     dialog.setModal(true);
+    // TODO set select exactly one file to open
 
     if (dialog.exec())
     {
-        // TODO I want to do something like this:
-        // selectedMedia.save(filename);
+        QString file = dialog.selectedFiles().at(0);
+        selectedMedia.saveToFile(file);
     }
 
 }
@@ -316,11 +317,12 @@ void PurrWindow::appendMediaFromFile()
     dialog.setParent(this);
     dialog.setNameFilter("*.xspf");
     dialog.setModal(true);
+    // TODO set select exactly one file to save
 
     if (dialog.exec())
     {
-        // TODO I want to do something like this:
-        // selectedMedia.append(filename);
+        QString file = dialog.selectedFiles().at(0);
+        selectedMedia.appendFromFile(file);
     }
 
 }

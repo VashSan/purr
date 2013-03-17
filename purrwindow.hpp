@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QMediaPlayer>
 #include "taginfo.hpp"
+#include "playlist.hpp"
 
 namespace Ui {
 class PurrWindow;
@@ -56,7 +57,7 @@ private slots:
 
 private:
     Ui::PurrWindow *ui;
-    QVector<STagInfo> selectedMedia;
+    CPlaylist selectedMedia;
     QMediaPlayer player;
     qint64 currentDuration;
     qint32 nextTrack;
